@@ -39,10 +39,7 @@ const StudentSchema = new mongoose.Schema(
 
 		deptCodeName: {
 			type: String,
-			required: [
-				true,
-				`Please provide Department's Code name. Example: CSE`,
-			],
+			required: [true, `Please provide Department's Code name`],
 		},
 
 		routeNo: {

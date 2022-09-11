@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongooseTypePhone = require('mongoose-type-phone');
 
 const BusSchema = new mongoose.Schema(
 	{
@@ -20,7 +21,7 @@ const BusSchema = new mongoose.Schema(
 
 		driverInfo: {
 			name: {
-				type: String,
+				type: mongoose.SchemaTypes.Phone,
 				required: [true, 'Please provide the bus driver name'],
 			},
 
