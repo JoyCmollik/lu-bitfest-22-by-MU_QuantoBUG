@@ -5,7 +5,6 @@ const BusSchema = new mongoose.Schema(
 	{
 		licenseNo: {
 			type: String,
-			required: [true, 'Please provide the bus number'],
 		},
 
 		codeName: {
@@ -21,12 +20,11 @@ const BusSchema = new mongoose.Schema(
 
 		driverInfo: {
 			name: {
-				type: mongoose.SchemaTypes.Phone,
-				required: [true, 'Please provide the bus driver name'],
+				type: String,
 			},
 
 			contacts: {
-				type: String,
+				type: mongoose.SchemaTypes.Phone,
 				required: [true, 'Please provide the bus driver name'],
 			},
 		},

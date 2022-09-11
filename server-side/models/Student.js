@@ -37,11 +37,6 @@ const StudentSchema = new mongoose.Schema(
 			default: 'cse',
 		},
 
-		deptCodeName: {
-			type: String,
-			required: [true, `Please provide Department's Code name`],
-		},
-
 		routeNo: {
 			type: Number,
 			enum: [1, 2, 3, 4],
