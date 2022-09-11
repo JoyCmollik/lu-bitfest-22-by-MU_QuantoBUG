@@ -17,6 +17,7 @@ import DashboardHome from './Pages/Dashboard/DashboardHome/DashboardHome';
 import Home from './Pages/HomePage/Home/Home';
 import AdminLogin from './Pages/LoginPage/AdminLogin/AdminLogin';
 import AdminRegister from './Pages/LoginPage/AdminRegister/AdminRegister';
+import ConsumerBusDetails from './Pages/LoginPage/ConsumerBusDetails/ConsumerBusDetails';
 import ConsumerLogin from './Pages/LoginPage/ConsumerLogin/ConsumerLogin';
 import ConsumerRegister from './Pages/LoginPage/ConsumerRegister/ConsumerRegister';
 
@@ -32,7 +33,10 @@ function App() {
 				<Route path='adminRegister' element={<AdminRegister />} />
 				<Route path='consumerRegister' element={<ConsumerRegister />} />
 				<Route path='consumerLogin' element={<ConsumerLogin />} />
-
+				<Route
+					path='consumerBusInfo'
+					element={<ConsumerBusDetails />}
+				/>
 				<Route path='dashboard/*' element={<DashboardHome />}>
 					<Route index element={<ConsumerDashboardHome />} />
 					<Route
