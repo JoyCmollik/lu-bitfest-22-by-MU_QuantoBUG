@@ -9,7 +9,7 @@ const LoginStarter = () => {
 	const userType = [
 		{
 			type: 'consumer',
-			text: 'click here, if you are a teacher, students or stuff.',
+			text: 'click here, if you are a teacher, students or staff.',
 			icon: <FaUsers className='inline-block text-5xl text-slate-900' />,
 			handler: () => navigate('/consumerRegister'),
 		},

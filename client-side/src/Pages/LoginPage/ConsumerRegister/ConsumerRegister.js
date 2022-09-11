@@ -58,12 +58,12 @@ const ConsumerRegister = () => {
 
 	return (
 		<section className='mx-auto'>
-			<div className='grid grid-cols-2 justify-center space-x-5 items-center'>
+			<div className='grid grid-cols-12 grid-gap-[25px] justify-center items-center'>
 				{/* image */}
-				<article className=''>
+				<div className='col-span-5'>
 					<img src={userLogin} alt='' />
-				</article>
-				<article className=''>
+				</div>
+				<div className='p-[25px] col-span-7'>
 					<h2 className='text-dark font-semibold text-3xl mb-2'>
 						Consumer Register
 					</h2>
@@ -96,24 +96,30 @@ const ConsumerRegister = () => {
 						{/* student role */}
 						<div className='flex space-x-4 items-center my-3'>
 							<button
-								className={`bg-purple-800 p-3 rounded text-white hover:bg-purple-500 capitalize${
-									role === 'student' ? 'bg-dark' : ''
+								className={`px-5 py-3 rounded text-dark hover:bg-gray-400 capitalize shadow ${
+									role === 'student'
+										? 'bg-gray-500 text-white'
+										: 'bg-gray-200'
 								}`}
 								onClick={() => handleRole('student')}
 							>
 								student
 							</button>
 							<button
-								className={`bg-purple-800 p-3 rounded text-white hover:bg-purple-500 capitalize${
-									role === 'teacher' ? 'bg-dark' : ''
+								className={`px-5 py-3 rounded text-dark hover:bg-gray-400 capitalize shadow ${
+									role === 'teacher'
+										? 'bg-gray-500 text-white'
+										: 'bg-gray-200'
 								}`}
 								onClick={() => handleRole('teacher')}
 							>
 								teacher
 							</button>
 							<button
-								className={`bg-purple-800  p-3 rounded text-white hover:bg-purple-500 capitalize${
-									role === 'staff' ? 'bg-dark' : ''
+								className={`px-5 py-3 rounded text-dark hover:bg-gray-400 capitalize shadow ease-in-out duration-100 ${
+									role === 'staff'
+										? 'bg-gray-500 text-white'
+										: 'bg-gray-200'
 								}`}
 								onClick={() => handleRole('staff')}
 							>
@@ -140,7 +146,7 @@ const ConsumerRegister = () => {
 							Sign In
 						</Link>
 					</p>
-				</article>
+				</div>
 			</div>
 		</section>
 	);
