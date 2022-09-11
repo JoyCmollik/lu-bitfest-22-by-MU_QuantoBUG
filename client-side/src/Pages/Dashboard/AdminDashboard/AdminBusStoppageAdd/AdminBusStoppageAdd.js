@@ -1,47 +1,29 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
-
-const matchedRoute = {
-	id: 1,
-	routeNumber: '10',
-	startLocationLabel: 'Chandipul',
-	startLocationLatitudeAndLongitude: '24.8948° N, 91.8690° E',
-	startTime: '8:35 AM',
-};
 
 const inputs = [
 	{
 		inputType: 'number',
 		inputTitle: 'Route Number',
 		inputData: 'routeNo',
-		value: matchedRoute.routeNumber,
 	},
 	{
 		inputType: 'text',
 		inputTitle: 'label',
 		inputData: 'label',
-		value: matchedRoute.startLocationLabel,
 	},
 	{
 		inputType: 'text',
 		inputTitle: 'Latitude & Longitude',
 		inputData: 'Latitude&Longitude',
-		value: matchedRoute.startLocationLatitudeAndLongitude,
-	},
-	{
-		inputType: 'text',
-		inputTitle: 'Start Time',
-		inputData: 'startTime',
-		value: matchedRoute.startTime,
 	},
 ];
-const AdminBusRouteUpdate = () => {
-	const { routeId } = useParams();
+
+const AdminBusStoppageAdd = () => {
 	const { register, handleSubmit, reset } = useForm();
 
 	const onSubmit = (data) => {
-		/* 	console.log(data); */
+		console.log(data);
 
 		reset();
 	};
@@ -54,10 +36,10 @@ const AdminBusRouteUpdate = () => {
 					<div className='flex justify-between '>
 						<div>
 							<h2 className='text-2xl font-semibold'>
-								Bus Routes
+								Bus Stoppage
 							</h2>
 							<p className='text-sm text-gray-600'>
-								Updating bus Routes {routeId}
+								add new bus stoppage
 							</p>
 						</div>
 						<div className='py-2 '>
@@ -101,4 +83,4 @@ const AdminBusRouteUpdate = () => {
 	);
 };
 
-export default AdminBusRouteUpdate;
+export default AdminBusStoppageAdd;
