@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import DashboardHome from './Pages/Dashboard/DashboardHome/DashboardHome';
 import Home from './Pages/HomePage/Home/Home';
 import Login from './Pages/LoginPage/Login/Login';
 import Register from './Pages/LoginPage/Register/Register';
@@ -13,6 +14,7 @@ function App() {
 				<Route path='/home' element={<Home />} />
 				<Route path='/login' element={<Login />} />
 				<Route path='/register' element={<Register />} />
+				<Route path='/dashboard' element={<DashboardHome />} />
 				<Route path='*' element={<NotFound />} />
 			</Routes>
 		</div>
