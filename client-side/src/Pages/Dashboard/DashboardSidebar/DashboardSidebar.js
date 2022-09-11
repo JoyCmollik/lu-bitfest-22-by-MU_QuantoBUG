@@ -11,12 +11,12 @@ const studentLinks = [
 		icon: <AiOutlineHome />,
 	},
 	{
-		to: 'profile',
+		to: '/dashboard/profile',
 		text: 'Profile',
 		icon: <GrUserSettings />,
 	},
 	{
-		to: 'manage',
+		to: '/dashboard/request',
 		text: 'Manage Requests',
 		icon: <IoBusOutline />,
 	},
@@ -29,7 +29,7 @@ const adminLinks = [
 		icon: <AiOutlineHome />,
 	},
 	{
-		to: '/bus-inventory',
+		to: '/dashboard/inventory',
 		text: 'Bus Inventory',
 		icon: <AiOutlineHome />,
 	},
@@ -93,7 +93,7 @@ const DashboardSidebar = () => {
 					</NavLink>
 				))}
 
-                <h4>admin links</h4>
+				<h4>admin links</h4>
 				{adminLinks.map(({ to, text, icon }, linkIdx) => (
 					<NavLink
 						to={to}
