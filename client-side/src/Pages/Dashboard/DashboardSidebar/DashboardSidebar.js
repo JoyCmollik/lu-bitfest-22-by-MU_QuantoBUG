@@ -35,7 +35,7 @@ const adminLinks = [
 		icon: <AiOutlineHome />,
 	},
 	{
-		to: '/routes',
+		to: '/dashboard/routes',
 		text: 'Routes',
 		icon: <AiOutlineHome />,
 	},

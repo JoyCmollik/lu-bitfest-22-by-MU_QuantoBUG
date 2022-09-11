@@ -63,7 +63,7 @@ const AdminLogin = () => {
 						<div className='py-2 '>
 							<input
 								type='submit'
-								value={'Register'}
+								value={'Login'}
 								className='w-1/2 border py-3 pl-3 rounded-lg focus:outline-none focus:ring-1 focus:border-purple-600 text-white bg-dark'
 							/>
 						</div>

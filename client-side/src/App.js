@@ -1,6 +1,11 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import AdminBusInventory from './Pages/Dashboard/AdminDashboard/AdminBusInventory/AdminBusInventory';
+import AdminBusInventoryAdd from './Pages/Dashboard/AdminDashboard/AdminBusInventoryAdd/AdminBusInventoryAdd';
+import AdminBusInventoryUpdate from './Pages/Dashboard/AdminDashboard/AdminBusInventoryUpdate/AdminBusInventoryUpdate';
+import AdminBusRoute from './Pages/Dashboard/AdminDashboard/AdminBusRoute/AdminBusRoute';
+import AdminBusRouteAdd from './Pages/Dashboard/AdminDashboard/AdminBusRouteAdd/AdminBusRouteAdd';
+import AdminBusRouteUpdate from './Pages/Dashboard/AdminDashboard/AdminBusRouteUpdate/AdminBusRouteUpdate';
 import ConsumerDashboardHome from './Pages/Dashboard/ConsumerDashboard/ConsumerDashboardHome/ConsumerDashboardHome';
 import ConsumerDashboardProfile from './Pages/Dashboard/ConsumerDashboard/ConsumerDashboardProfile/ConsumerDashboardProfile';
 import ConsumeRequestSeat from './Pages/Dashboard/ConsumerDashboard/ConsumerRequestSeat/ConsumeRequestSeat';
@@ -31,6 +36,18 @@ function App() {
 					/>
 					<Route path='request' element={<ConsumeRequestSeat />} />
 					<Route path='inventory' element={<AdminBusInventory />} />
+
+					<Route path='addBus' element={<AdminBusInventoryAdd />} />
+					<Route
+						path='busUpdate/:busId'
+						element={<AdminBusInventoryUpdate />}
+					/>
+					<Route path='routes' element={<AdminBusRoute />} />
+					<Route path='addRoute' element={<AdminBusRouteAdd />} />
+					<Route
+						path='routeUpdate/:routeId'
+						element={<AdminBusRouteUpdate />}
+					/>
 				</Route>
 				<Route path='*' element={<NotFound />} />
 			</Routes>
