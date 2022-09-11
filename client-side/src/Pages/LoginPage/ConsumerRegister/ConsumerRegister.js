@@ -1,20 +1,26 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
-import userLogin from '../../../Images/user-login.png';
+import { Link, useNavigate } from 'react-router-dom';
+import useAuth from '../../../hooks/useAuth';
+import useAuthentication from '../../../hooks/useAuthentication';
+import userLogin from '../../../Images/user-login.png'; 
 
 const initialInputs = [
 	{
 		inputType: 'Full Name',
+		property: 'name',
 	},
 	{
 		inputType: 'Email',
+		property: 'email',
 	},
 	{
 		inputType: 'password',
+		property: 'password',
 	},
 	{
 		inputType: 'Contact Number',
+		property: 'contacts',
 	},
 ];
 
@@ -24,6 +30,10 @@ const ConsumerRegister = () => {
 
 	// form submit
 	const { register, handleSubmit, reset } = useForm();
+
+	// custom hooks
+	const { handleConsumerRegister } = useAuth();
+	const navigate = useNavigate();
 
 	const handleRole = (newRole) => {
 		setRole((prevRole) => newRole);
@@ -40,7 +50,9 @@ const ConsumerRegister = () => {
 
 	const onSubmit = (data) => {
 		console.log(data);
+		data.role = role;
 
+		handleConsumerRegister(data, navigate);
 		reset();
 	};
 
@@ -60,14 +72,14 @@ const ConsumerRegister = () => {
 					</p>
 					{/* input forms */}
 					<form onSubmit={handleSubmit(onSubmit)}>
-						{finInputList.map(({ inputType }, index) => (
+						{finInputList.map(({ inputType, property }, index) => (
 							<div key={index} className=' py-2'>
 								<input
 									className='w-1/2 border py-3 pl-3 rounded-lg focus:outline-none focus:ring-1 focus:border-blue-500'
 									type={inputType}
 									name={inputType}
 									placeholder={inputType}
-									{...register(`${inputType}`, {
+									{...register(`${property}`, {
 										required: true,
 									})}
 								/>
@@ -81,6 +93,7 @@ const ConsumerRegister = () => {
 									{error}
 								</small> */}
 
+						{/* student role */}
 						<div className='flex space-x-4 items-center my-3'>
 							<button
 								className={`bg-purple-800 p-3 rounded text-white hover:bg-purple-500 capitalize${

@@ -1,24 +1,29 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import useAuth from '../../../hooks/useAuth';
 import userLogin from '../../../Images/user-login.png';
 
 const initialInputs = [
 	{
 		inputType: 'Email',
+		property: 'email',
 	},
 	{
 		inputType: 'password',
+		property: 'password',
 	},
 ];
 
-const AdminRegister = () => {
+const AdminLogin = () => {
 	// form submit
 	const { register, handleSubmit, reset } = useForm();
+	const navigate = useNavigate();
+	const { handleLoginAdmin } = useAuth();
 
 	const onSubmit = (data) => {
 		console.log(data);
-
+		handleLoginAdmin(data, navigate);
 		reset();
 	};
 
@@ -38,14 +43,14 @@ const AdminRegister = () => {
 					</p>
 					{/* input forms */}
 					<form onSubmit={handleSubmit(onSubmit)}>
-						{initialInputs.map(({ inputType }, index) => (
+						{initialInputs.map(({ inputType, property }, index) => (
 							<div key={index} className=' py-2'>
 								<input
 									className='w-1/2 border py-3 pl-3 rounded-lg focus:outline-none focus:ring-1 focus:border-blue-500'
 									type={inputType}
 									name={inputType}
 									placeholder={inputType}
-									{...register(`${inputType}`, {
+									{...register(`${property}`, {
 										required: true,
 									})}
 								/>
@@ -63,21 +68,10 @@ const AdminRegister = () => {
 							/>
 						</div>
 					</form>
-					{/* signup link */}
-
-					<p className='mt-5'>
-						Don't have an account ?
-						<Link
-							className='form-link text-base text-[#0E1C36] font-semibold ml-2'
-							to='/adminRegister'
-						>
-							Sign In
-						</Link>
-					</p>
 				</article>
 			</div>
 		</section>
 	);
 };
 
-export default AdminRegister;
+export default AdminLogin;

@@ -19,7 +19,7 @@ const LoginStarter = () => {
 			icon: (
 				<GrUserAdmin className='inline-block text-5xl text-slate-900' />
 			),
-			handler: () => navigate('/adminRegister'),
+			handler: () => navigate('/adminLogin'),
 		},
 	];
 
