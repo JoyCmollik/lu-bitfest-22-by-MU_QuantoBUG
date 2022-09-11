@@ -29,27 +29,22 @@ const getAllBuses = async (req, res) => {
 
 const updateBusInfo = async (req, res) => {
 	const {
-		body: {
-			licenseNo,
-			codeName,
-			capacity,
-			driverInfo: { name, contacts },
-			isActive,
-		},
 		params: { id: busId },
 	} = req;
 
-	if (
-		licenseNo === '' ||
-		codeName === '' ||
-		capacity === '' ||
-		name === '' ||
-		contacts === ''
-	) {
-		throw new BadRequestError(
-			'License no, code name, capacity, name, contacts fields can not be empty'
-		);
-	}
+	console.log(busId, req.body);
+
+	// if (
+	// 	licenseNo === '' ||
+	// 	codeName === '' ||
+	// 	capacity === '' ||
+	// 	name === '' ||
+	// 	contacts === ''
+	// ) {
+	// 	throw new BadRequestError(
+	// 		'License no, code name, capacity, name, contacts fields can not be empty'
+	// 	);
+	// }
 
 	const bus = await Bus.findByIdAndUpdate(busId, req.body, {
 		new: true,
@@ -85,7 +80,7 @@ const deleteBus = async (req, res) => {
 		throw new NotFoundError(`No bus with id ${busId}`);
 	}
 
-	res.status(StatusCodes.OK).send();
+	res.status(StatusCodes.OK).send({msg: 'successfully deleted'});
 };
 
 module.exports = {

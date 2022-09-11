@@ -14,11 +14,11 @@ const cors = require('cors');
 const connectDB = require('./db/connect');
 
 // routers
+const busRouter = require('./routes/busRoutes');
 const authRouter = require('./routes/authRoutes');
 const userRouter = require('./routes/userRoutes');
-const studentRouter = require('./routes/studentRoutes');
 const routeStartRouter = require('./routes/routeStartRouter');
-const busRouter = require('./routes/busRoutes');
+const routeStoppageRouter = require('./routes/routeStoppagesRoutes');
 
 // middleware
 const notFoundMiddleware = require('./middleware/not-found');
@@ -41,9 +41,9 @@ app.get('/api/v1', (req, res) => {
 
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', userRouter);
-app.use('/api/v1/student', studentRouter);
 app.use('/api/v1/routeStart', routeStartRouter);
 app.use('/api/v1/bus', busRouter);
+app.use('api/v1/stoppage', routeStoppageRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

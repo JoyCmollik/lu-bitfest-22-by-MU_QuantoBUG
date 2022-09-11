@@ -2,17 +2,17 @@ const express = require('express');
 const router = express.Router();
 
 const {
-	createRoute,
-	updateRoute,
-	getAllRoutes,
-	getFiltered,
-	// deleteRoute,
-} = require('../controllers/routeStartController');
+	createRouteStoppages,
+	updateRouteStoppages,
+	getAllRouteStoppages,
+	getFilteredStoppages,
+	deleteRouteStoppages,
+} = require('../controllers/routeStoppagesController');
 
-router.get('/get', getAllRoutes);
-router.post('/create', createRoute);
-router.patch('/update/:id', updateRoute);
-router.get('/getFiltered/:id', getFiltered);
-// router.delete('/delete/:id', deleteRoute);
+router.get('/get', getAllRouteStoppages);
+router.post('/create', createRouteStoppages);
+router.patch('/update/:id', updateRouteStoppages);
+router.get('/getFiltered/:busRoute', getFilteredStoppages);
+router.delete('/delete/:id', deleteRouteStoppages);
 
 module.exports = router;

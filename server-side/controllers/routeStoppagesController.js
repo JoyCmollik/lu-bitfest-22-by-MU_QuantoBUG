@@ -2,13 +2,13 @@ const RouteStoppages = require('../models/RouteStoppages');
 const { StatusCodes } = require('http-status-codes');
 const { BadRequestError, NotFoundError } = require('../errors');
 
-const getAllRoutes = async (req, res) => {
+const getAllRouteStoppages = async (req, res) => {
 	const routes = await RouteStoppages.find();
 
 	res.status(StatusCodes.OK).json({ routes, count: routes.length });
 };
 
-const getFiltered = async (req, res) => {
+const getFilteredStoppages = async (req, res) => {
 	const {
 		// user: { userId },
 		params: { id: routeNo },
@@ -27,27 +27,27 @@ const getFiltered = async (req, res) => {
 	res.status(StatusCodes.OK).json({ route });
 };
 
-const updateRoute = async (req, res) => {
+const updateRouteStoppages = async (req, res) => {
 	const {
 		body: {
 			routeNo,
 			startTime,
-			startLocation: { label, latitude, longitude },
+		 label, latitude, longitude ,
 		},
 		params: { id: routeId },
 	} = req;
 
-	if (
-		routeNo === '' ||
-		startTime === '' ||
-		label === '' ||
-		latitude === '' ||
-		longitude === ''
-	) {
-		throw new BadRequestError(
-			'Route No, start time, start location fields can not be empty'
-		);
-	}
+	// if (
+	// 	routeNo === '' ||
+	// 	startTime === '' ||
+	// 	label === '' ||
+	// 	latitude === '' ||
+	// 	longitude === ''
+	// ) {
+	// 	throw new BadRequestError(
+	// 		'Route No, start time, start location fields can not be empty'
+	// 	);
+	// }
 
 	const routeStart = await RouteStoppages.findByIdAndUpdate(
 		routeId,
@@ -66,35 +66,35 @@ const updateRoute = async (req, res) => {
 	res.status(StatusCodes.OK).json({ routeStart });
 };
 
-const createRoute = async (req, res) => {
+const createRouteStoppages = async (req, res) => {
 	// req.body.createdBy = req.user.userId;
 
 	const routeStart = await RouteStoppages.create(req.body);
 	res.status(StatusCodes.CREATED).json({ routeStart });
 };
 
-// const deleteRoute = async (req, res) => {
-// 	const {
-// 		params: { id: routeId },
-// 	} = req;
+const deleteRouteStoppages = async (req, res) => {
+	const {
+		params: { id: routeId },
+	} = req;
 
-// 	console.log(req.params);
+	console.log(req.params);
 
-// 	const route = await Route.findByIdAndRemove({
-// 		_id: routeId,
-// 	});
+	const route = await RouteStoppages.findByIdAndRemove({
+		_id: routeId,
+	});
 
-// 	if (!route) {
-// 		throw new NotFoundError(`No route with id ${routeId}`);
-// 	}
+	if (!route) {
+		throw new NotFoundError(`No route with id ${routeId}`);
+	}
 
-// 	res.status(StatusCodes.OK).send();
-// };
+	res.status(StatusCodes.OK).send();
+};
 
 module.exports = {
-	createRoute,
-	updateRoute,
-	getAllRoutes,
-	getFiltered,
-	// deleteRoute,
+	createRouteStoppages,
+	updateRouteStoppages,
+	getAllRouteStoppages,
+	getFilteredStoppages,
+	deleteRouteStoppages,
 };

@@ -9,10 +9,11 @@ const {
 	deleteBus,
 } = require('../controllers/busController');
 
+// router.put('/update/:id', updateBusInfo);
 router.get('/get', getAllBuses);
 router.post('/create', createBusInfo);
-router.patch('/update/:id', updateBusInfo);
 // router.get('/getFiltered/:id', getFiltered);
+router.route('/update/:id').put(updateBusInfo);
 router.delete('/delete/:id', deleteBus);
 
 module.exports = router;

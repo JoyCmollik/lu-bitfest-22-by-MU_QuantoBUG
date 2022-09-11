@@ -37,17 +37,17 @@ const updateRoute = async (req, res) => {
 		params: { id: routeId },
 	} = req;
 
-	if (
-		routeNo === '' ||
-		startTime === '' ||
-		label === '' ||
-		latitude === '' ||
-		longitude === ''
-	) {
-		throw new BadRequestError(
-			'Route No, start time, start location fields can not be empty'
-		);
-	}
+	// if (
+	// 	routeNo === '' ||
+	// 	startTime === '' ||
+	// 	label === '' ||
+	// 	latitude === '' ||
+	// 	longitude === ''
+	// ) {
+	// 	throw new BadRequestError(
+	// 		'Route No, start time, start location fields can not be empty'
+	// 	);
+	// }
 
 	const routeStart = await RouteStart.findByIdAndUpdate(routeId, req.body, {
 		new: true,
@@ -69,28 +69,28 @@ const createRoute = async (req, res) => {
 	res.status(StatusCodes.CREATED).json({ routeStart });
 };
 
-// const deleteRoute = async (req, res) => {
-// 	const {
-// 		params: { id: routeId },
-// 	} = req;
+const deleteRoute = async (req, res) => {
+	const {
+		params: { id: routeId },
+	} = req;
 
-// 	console.log(req.params);
+	console.log(req.params);
 
-// 	const route = await Route.findByIdAndRemove({
-// 		_id: routeId,
-// 	});
+	const route = await RouteStart.findByIdAndRemove({
+		_id: routeId,
+	});
 
-// 	if (!route) {
-// 		throw new NotFoundError(`No route with id ${routeId}`);
-// 	}
+	if (!route) {
+		throw new NotFoundError(`No route with id ${routeId}`);
+	}
 
-// 	res.status(StatusCodes.OK).send();
-// };
+	res.status(StatusCodes.OK).send();
+};
 
 module.exports = {
 	createRoute,
 	updateRoute,
 	getAllRoutes,
 	getFiltered,
-	// deleteRoute,
+	deleteRoute,
 };

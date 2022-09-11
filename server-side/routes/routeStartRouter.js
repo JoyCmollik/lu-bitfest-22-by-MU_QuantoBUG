@@ -6,13 +6,14 @@ const {
 	updateRoute,
 	getAllRoutes,
 	getFiltered,
-	// deleteRoute,
+	deleteRoute,
 } = require('../controllers/routeStartController');
+const { authenticateUser } = require('../middleware/authentication');
 
 router.get('/get', getAllRoutes);
 router.post('/create', createRoute);
 router.patch('/update/:id', updateRoute);
 router.get('/getFiltered/:id', getFiltered);
-// router.delete('/delete/:id', deleteRoute);
+router.delete('/delete/:id', deleteRoute);
 
 module.exports = router;
