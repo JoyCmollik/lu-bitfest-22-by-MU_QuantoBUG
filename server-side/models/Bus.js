@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
+const mongooseTypePhone = require('mongoose-type-phone');
 
 const BusSchema = new mongoose.Schema(
 	{
 		licenseNo: {
 			type: String,
-			required: [true, 'Please provide the bus number'],
 		},
 
 		codeName: {
@@ -21,11 +21,10 @@ const BusSchema = new mongoose.Schema(
 		driverInfo: {
 			name: {
 				type: String,
-				required: [true, 'Please provide the bus driver name'],
 			},
 
 			contacts: {
-				type: String,
+				type: mongoose.SchemaTypes.Phone,
 				required: [true, 'Please provide the bus driver name'],
 			},
 		},
