@@ -28,14 +28,7 @@ const getFilteredStoppages = async (req, res) => {
 };
 
 const updateRouteStoppages = async (req, res) => {
-	const {
-		body: {
-			routeNo,
-			startTime,
-		 label, latitude, longitude ,
-		},
-		params: { id: routeId },
-	} = req;
+	const { id } = req.params;
 
 	// if (
 	// 	routeNo === '' ||
@@ -50,7 +43,7 @@ const updateRouteStoppages = async (req, res) => {
 	// }
 
 	const routeStart = await RouteStoppages.findByIdAndUpdate(
-		routeId,
+		id,
 		req.body,
 		{
 			new: true,
@@ -60,7 +53,6 @@ const updateRouteStoppages = async (req, res) => {
 
 	if (!routeStart) {
 		throw new NotFoundError(`No job with id ${routeId}`);
-		// throw new NotFoundError(`No job with id`);
 	}
 
 	res.status(StatusCodes.OK).json({ routeStart });
