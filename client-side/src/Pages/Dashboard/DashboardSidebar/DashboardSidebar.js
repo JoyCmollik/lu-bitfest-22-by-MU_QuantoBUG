@@ -40,7 +40,7 @@ const adminLinks = [
 		icon: <AiOutlineHome />,
 	},
 	{
-		to: '/stoppages',
+		to: '/dashboard/stoppages',
 		text: 'Stoppages',
 		icon: <AiOutlineHome />,
 	},

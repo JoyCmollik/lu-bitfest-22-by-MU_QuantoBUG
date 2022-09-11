@@ -2,12 +2,11 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 
-const matchedRoute = {
+const matchedStoppage = {
 	id: 1,
 	routeNumber: '10',
 	startLocationLabel: 'Chandipul',
 	startLocationLatitudeAndLongitude: '24.8948° N, 91.8690° E',
-	startTime: '8:35 AM',
 };
 
 const inputs = [
@@ -15,29 +14,25 @@ const inputs = [
 		inputType: 'number',
 		inputTitle: 'Route Number',
 		inputData: 'routeNo',
-		value: matchedRoute.routeNumber,
+		value: matchedStoppage.routeNumber,
 	},
 	{
 		inputType: 'text',
 		inputTitle: 'label',
 		inputData: 'label',
-		value: matchedRoute.startLocationLabel,
+		value: matchedStoppage.startLocationLabel,
 	},
 	{
 		inputType: 'text',
 		inputTitle: 'Latitude & Longitude',
 		inputData: 'Latitude&Longitude',
-		value: matchedRoute.startLocationLatitudeAndLongitude,
-	},
-	{
-		inputType: 'text',
-		inputTitle: 'Start Time',
-		inputData: 'startTime',
-		value: matchedRoute.startTime,
+		value: matchedStoppage.startLocationLatitudeAndLongitude,
 	},
 ];
-const AdminBusRouteUpdate = () => {
-	const { routeId } = useParams();
+
+const AdminBusStoppageUpdate = () => {
+	const { stoppageId } = useParams();
+	console.log(stoppageId);
 	const { register, handleSubmit, reset } = useForm();
 
 	const onSubmit = (data) => {
@@ -54,10 +49,10 @@ const AdminBusRouteUpdate = () => {
 					<div className='flex justify-between '>
 						<div>
 							<h2 className='text-2xl font-semibold'>
-								Bus Routes
+								Bus Stoppage
 							</h2>
 							<p className='text-sm text-gray-600'>
-								Updating bus Routes {routeId}
+								Updating bus Stoppage {stoppageId}
 							</p>
 						</div>
 						<div className='py-2 '>
@@ -101,4 +96,4 @@ const AdminBusRouteUpdate = () => {
 	);
 };
 
-export default AdminBusRouteUpdate;
+export default AdminBusStoppageUpdate;

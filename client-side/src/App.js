@@ -6,6 +6,10 @@ import AdminBusInventoryUpdate from './Pages/Dashboard/AdminDashboard/AdminBusIn
 import AdminBusRoute from './Pages/Dashboard/AdminDashboard/AdminBusRoute/AdminBusRoute';
 import AdminBusRouteAdd from './Pages/Dashboard/AdminDashboard/AdminBusRouteAdd/AdminBusRouteAdd';
 import AdminBusRouteUpdate from './Pages/Dashboard/AdminDashboard/AdminBusRouteUpdate/AdminBusRouteUpdate';
+import AdminBusStoppage from './Pages/Dashboard/AdminDashboard/AdminBusStoppage/AdminBusStoppage';
+import AdminBusStoppageAdd from './Pages/Dashboard/AdminDashboard/AdminBusStoppageAdd/AdminBusStoppageAdd';
+import AdminBusStoppageUpdate from './Pages/Dashboard/AdminDashboard/AdminBusStoppageUpdate/AdminBusStoppageUpdate';
+
 import ConsumerDashboardHome from './Pages/Dashboard/ConsumerDashboard/ConsumerDashboardHome/ConsumerDashboardHome';
 import ConsumerDashboardProfile from './Pages/Dashboard/ConsumerDashboard/ConsumerDashboardProfile/ConsumerDashboardProfile';
 import ConsumeRequestSeat from './Pages/Dashboard/ConsumerDashboard/ConsumerRequestSeat/ConsumeRequestSeat';
@@ -28,6 +32,7 @@ function App() {
 				<Route path='adminRegister' element={<AdminRegister />} />
 				<Route path='consumerRegister' element={<ConsumerRegister />} />
 				<Route path='consumerLogin' element={<ConsumerLogin />} />
+
 				<Route path='dashboard/*' element={<DashboardHome />}>
 					<Route index element={<ConsumerDashboardHome />} />
 					<Route
@@ -47,6 +52,15 @@ function App() {
 					<Route
 						path='routeUpdate/:routeId'
 						element={<AdminBusRouteUpdate />}
+					/>
+					<Route path='stoppages' element={<AdminBusStoppage />} />
+					<Route
+						path='addstoppage'
+						element={<AdminBusStoppageAdd />}
+					/>
+					<Route
+						path='stoppageUpdate/:stoppageId'
+						element={<AdminBusStoppageUpdate />}
 					/>
 				</Route>
 				<Route path='*' element={<NotFound />} />
