@@ -44,6 +44,12 @@ const StudentSchema = new mongoose.Schema(
 				`Please provide Department's Code name. Example: CSE`,
 			],
 		},
+
+		routeNo: {
+			type: Number,
+			enum: [1, 2, 3, 4],
+			default: 1,
+		},
 	},
 	{ timestamps: true }
 );
