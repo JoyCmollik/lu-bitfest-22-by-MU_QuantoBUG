@@ -19,12 +19,22 @@ const StudentSchema = new mongoose.Schema(
 
 		section: {
 			type: String,
-			required: [true, 'Please provide your Section'],
+			enum: ['a', 'b', 'c', 'd', 'e'],
+			default: 'a',
 		},
 
 		department: {
 			type: String,
-			required: [true, 'Please provide your Department name'],
+			enum: [
+				'cse',
+				'eee',
+				'civil',
+				'architecture',
+				'bba',
+				'english',
+				'law',
+			],
+			default: 'cse',
 		},
 
 		deptCodeName: {

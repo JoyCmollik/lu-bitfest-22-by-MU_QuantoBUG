@@ -33,6 +33,11 @@ const UserSchema = new mongoose.Schema({
 		enum: ['student', 'teacher', 'staff', 'admin'],
 		default: 'student',
 	},
+	routeNo: {
+		type: Number,
+		enum: [1, 2, 3, 4],
+		default: 1,
+	},
 });
 
 // before we wanna save the document, we need to hash the password

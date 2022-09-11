@@ -12,6 +12,12 @@ const BusSchema = new mongoose.Schema(
 			required: [true, 'Please provide the code name'],
 		},
 
+		capacity: {
+			type: Number,
+			enum: [50, 60],
+			default: 50,
+		},
+
 		driverInfo: {
 			name: {
 				type: String,
@@ -23,10 +29,14 @@ const BusSchema = new mongoose.Schema(
 				required: [true, 'Please provide the bus driver name'],
 			},
 		},
+
+		isActive: {
+			type: Boolean,
+			enum: [true, false],
+			default: true,
+		},
 	},
 	{ timestamps: true }
 );
 
 module.exports = mongoose.model('Bus', BusSchema);
-
-let stop = [{}];

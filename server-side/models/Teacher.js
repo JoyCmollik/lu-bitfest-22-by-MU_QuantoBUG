@@ -9,7 +9,16 @@ const TeacherSchema = new mongoose.Schema(
 
 		department: {
 			type: String,
-			required: [true, 'Please provide your Department name'],
+			enum: [
+				'cse',
+				'eee',
+				'civil',
+				'architecture',
+				'bba',
+				'english',
+				'law',
+			],
+			default: 'cse',
 		},
 
 		deptCodeName: {
