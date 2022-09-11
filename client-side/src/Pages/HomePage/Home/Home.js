@@ -1,11 +1,13 @@
 import React from 'react';
 
 import Navbar from '../../../sharedComponents/Header/Navbar/Navbar';
+import LoginStarter from '../LoginStarter/LoginStarter';
 
 const Home = () => {
 	return (
 		<div className='container'>
-			<Navbar />
+			<LoginStarter />
+			{/* 	<Navbar /> */}
 			{/* <Footer /> */}
 		</div>
 	);
