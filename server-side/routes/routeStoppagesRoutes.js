@@ -9,10 +9,11 @@ const {
 	deleteRouteStoppages,
 } = require('../controllers/routeStoppagesController');
 
-router.get('/get', getAllRouteStoppages);
-router.post('/create', createRouteStoppages);
-router.patch('/update/:id', updateRouteStoppages);
-router.get('/getFiltered/:busRoute', getFilteredStoppages);
-router.delete('/delete/:id', deleteRouteStoppages);
+router.route('/').get(getAllRouteStoppages).post(createRouteStoppages);
+router
+	.route('/:id')
+	.get(getFilteredStoppages)
+	.put(getFilteredStoppages)
+	.delete(deleteRouteStoppages);
 
 module.exports = router;

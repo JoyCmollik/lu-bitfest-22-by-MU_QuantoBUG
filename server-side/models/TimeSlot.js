@@ -3,12 +3,11 @@ const mongoose = require('mongoose');
 const TimeSlotSchema = new mongoose.Schema(
 	{
 		routeNo: {
-			type: Number,
-			enum: [1, 2, 3, 4],
+			type: [Number],
 			default: 1,
 		},
 		busNo: {
-			type: Number,
+			type: [Number],
 			required: [true, 'Please provide the bus number'],
 		},
 

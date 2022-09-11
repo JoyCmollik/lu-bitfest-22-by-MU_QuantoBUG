@@ -3,8 +3,7 @@ const mongoose = require('mongoose');
 const RouteStoppagesSchema = new mongoose.Schema(
 	{
 		routeNo: {
-			type: Number,
-			enum: [1, 2, 3, 4],
+			type: [Number],
 			default: 1,
 		},
 		label: {
@@ -23,4 +22,4 @@ const RouteStoppagesSchema = new mongoose.Schema(
 	{ timestamps: true }
 );
 
-module.exports = mongoose.model('RouteStoppage', RouteStoppagesSchema);
+module.exports = mongoose.model('BusStoppage', RouteStoppagesSchema);

@@ -19,6 +19,8 @@ const authRouter = require('./routes/authRoutes');
 const userRouter = require('./routes/userRoutes');
 const routeStartRouter = require('./routes/routeStartRouter');
 const routeStoppageRouter = require('./routes/routeStoppagesRoutes');
+const timeSlotRouter = require('./routes/timeSlotRoutes');
+const queryRouter = require('./routes/queryRoutes');
 
 // middleware
 const notFoundMiddleware = require('./middleware/not-found');
@@ -43,7 +45,9 @@ app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/routeStart', routeStartRouter);
 app.use('/api/v1/bus', busRouter);
-app.use('api/v1/stoppage', routeStoppageRouter);
+app.use('/api/v1/stoppage', routeStoppageRouter);
+app.use('/api/v1/timeSlots', timeSlotRouter);
+app.use('/api/v1/query', queryRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
