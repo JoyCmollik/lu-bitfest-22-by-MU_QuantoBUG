@@ -1,154 +1,134 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
-import useAuth from '../../../hooks/useAuth';
-import useAuthentication from '../../../hooks/useAuthentication';
-import userLogin from '../../../Images/user-login.png'; 
-
-const initialInputs = [
-	{
-		inputType: 'Full Name',
-		property: 'name',
-	},
-	{
-		inputType: 'Email',
-		property: 'email',
-	},
-	{
-		inputType: 'password',
-		property: 'password',
-	},
-	{
-		inputType: 'Contact Number',
-		property: 'contacts',
-	},
-];
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { BiBus } from 'react-icons/bi';
+import { RiMapPinTimeFill } from 'react-icons/ri';
+import { useNavigate } from 'react-router-dom';
 
 const ConsumerRegister = () => {
-	const [finInputList, setFinInputList] = useState(initialInputs);
-	const [role, setRole] = useState('student');
-
-	// form submit
-	const { register, handleSubmit, reset } = useForm();
-
-	// custom hooks
-	const { handleConsumerRegister } = useAuth();
+	const [routes, setRoutes] = useState([]);
+	const [timeSlots, setTimeSlots] = useState([]);
+	const [routeNo, setRouteNo] = useState(null);
+	const [timeSlot, setTimeSlot] = useState(null);
 	const navigate = useNavigate();
 
-	const handleRole = (newRole) => {
-		setRole((prevRole) => newRole);
+	useEffect(() => {
+		axios
+			.get('/routeStart/get')
+			.then((res) => {
+				setRoutes(res.data.routes);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 
-		if (newRole === 'student') {
-			setFinInputList((prevList) => [
-				...initialInputs,
-				{ inputType: 'Student ID', property: 'studentId' },
-			]);
-		} else {
-			setFinInputList((prevList) => [...initialInputs]);
+		axios
+			.get('/timeSlots')
+			.then((res) => {
+				setTimeSlots(res.data.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, []);
+
+	const handleUpdateProfile = async () => {
+		if(!routeNo || !timeSlot) return;
+		try {
+			await axios.patch('/auth/updateUser', {
+				routeNo,
+				timeSlot,
+			});
+			navigate('/dashboard');
+
+		} catch (error) {
+			console.log(error)
 		}
-	};
-
-	const onSubmit = (data) => {
-		console.log(data);
-		data.role = role;
-
-		handleConsumerRegister(data, navigate);
-		reset();
-	};
+	}
 
 	return (
-		<section className='mx-auto'>
-			<div className='grid grid-cols-12 grid-gap-[25px] justify-center items-center'>
-				{/* image */}
-				<div className='col-span-5'>
-					<img src={userLogin} alt='' />
+		<div className='bg-light p-[100px]'>
+			<div className='bg-white rounded-lg shadow p-[25px] gap-4 space-y-[25px]'>
+				{/* select routes */}
+				<div className='space-y-[25px]'>
+					<h4 className='text-2xl font-bold text-dark tracking-wide'>
+						Select Routes
+					</h4>
+					<div className='grid grid-cols-4 gap-4'>
+						{routes &&
+							routes.map(({ _id, route, startLocation }) => (
+								<article
+									key={_id}
+									onClick={() => setRouteNo(route)}
+									className={`p-[25px] rounded-lg shadow border flex flex-col ${
+										routeNo === route
+											? 'border border-primary'
+											: 'border border-white'
+									}`}
+								>
+									<div>
+										<BiBus
+											className='text-gray-700 '
+											size={25}
+										/>
+									</div>
+									<h4 className='text-xl font-bold text-dark tracking-wide'>
+										Route No{' '}
+										<span className='text-3xl'>
+											{routeNo}
+										</span>
+									</h4>
+									<p className='text-gray-500'>
+										Starting From {startLocation?.label}
+									</p>
+								</article>
+							))}
+					</div>
 				</div>
-				<div className='p-[25px] col-span-7'>
-					<h2 className='text-dark font-semibold text-3xl mb-2'>
-						Consumer Register
-					</h2>
-					<p className='text-base text-gray-500 mb-5'>
-						fill the forms to login as a user
-					</p>
-					{/* input forms */}
-					<form onSubmit={handleSubmit(onSubmit)}>
-						{finInputList.map(({ inputType, property }, index) => (
-							<div key={index} className=' py-2'>
-								<input
-									className='w-1/2 border py-3 pl-3 rounded-lg focus:outline-none focus:ring-1 focus:border-blue-500'
-									type={inputType}
-									name={inputType}
-									placeholder={inputType}
-									{...register(`${property}`, {
-										required: true,
-									})}
-								/>
-								{/* 	<small className='text-red-500 block mt-2 text-sm'>
-									{error}
-								</small> */}
-							</div>
-						))}
 
-						{/* 	<small className='text-red-500 block mt-2 text-sm'>
-									{error}
-								</small> */}
+				{/* select time slots */}
+				<div className='space-y-[25px]'>
+					<h4 className='text-2xl font-bold text-dark tracking-wide'>
+						Select Your Time Slot
+					</h4>
+					<div className='grid grid-cols-4 gap-4'>
+						{timeSlots &&
+							timeSlots.map(({ _id, time }) => (
+								<article
+									key={_id}
+									onClick={() =>
+										setTimeSlot(time)
+									}
+									className={`p-[25px] rounded-lg shadow border flex flex-col space-y-2 ${
+										timeSlot === time
+											? 'border border-primary'
+											: 'border border-white'
+									}`}
+								>
+									<RiMapPinTimeFill
+										className='text-gray-700 '
+										size={20}
+									/>
 
-						{/* student role */}
-						<div className='flex space-x-4 items-center my-3'>
-							<button
-								className={`px-5 py-3 rounded text-dark hover:bg-gray-400 capitalize shadow ${
-									role === 'student'
-										? 'bg-gray-500 text-white'
-										: 'bg-gray-200'
-								}`}
-								onClick={() => handleRole('student')}
-							>
-								student
-							</button>
-							<button
-								className={`px-5 py-3 rounded text-dark hover:bg-gray-400 capitalize shadow ${
-									role === 'teacher'
-										? 'bg-gray-500 text-white'
-										: 'bg-gray-200'
-								}`}
-								onClick={() => handleRole('teacher')}
-							>
-								teacher
-							</button>
-							<button
-								className={`px-5 py-3 rounded text-dark hover:bg-gray-400 capitalize shadow ease-in-out duration-100 ${
-									role === 'staff'
-										? 'bg-gray-500 text-white'
-										: 'bg-gray-200'
-								}`}
-								onClick={() => handleRole('staff')}
-							>
-								staff
-							</button>
-						</div>
-
-						<div className='py-2 '>
-							<input
-								type='submit'
-								value={'Register'}
-								className='w-1/2 border py-3 pl-3 rounded-lg focus:outline-none focus:ring-1 focus:border-purple-600 text-white bg-dark'
-							/>
-						</div>
-					</form>
-					{/* signup link */}
-
-					<p className='mt-5'>
-						Don't have an account ?
-						<Link
-							className='form-link text-base text-[#0E1C36] font-semibold ml-2'
-							to='/consumerLogin'
-						>
-							Sign In
-						</Link>
-					</p>
+									<h4 className='text-lg font-bold text-dark tracking-wide'>
+										Starts At{' '}
+										<span className='text-xl'>
+											{timeSlot}
+										</span>
+									</h4>
+								</article>
+							))}
+					</div>
 				</div>
 			</div>
-		</section>
+			<div className='flex justify-end'>
+				<button
+					onClick={handleUpdateProfile}
+					className='mt-[25px] text-xl font-medium px-4 py-4 rounded-lg shadow bg-white'
+				>
+					Proceed to Dashboard
+				</button>
+			</div>
+		</div>
 	);
 };
 

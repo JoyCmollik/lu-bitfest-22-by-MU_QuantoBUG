@@ -23,15 +23,15 @@ const showCurrentUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-	const { email, name } = req.body;
+	// const { email, name } = req.body;
 
-	if (!email || !name) {
-		throw new CustomError.BadRequestError('Please provide both values');
-	}
+	// if (!email || !name) {
+	// 	throw new CustomError.BadRequestError('Please provide both values');
+	// }
 
 	const user = await User.findOneAndUpdate(
 		{ _id: req.user.userId },
-		{ email, name },
+		req.body,
 		{ new: true, runValidators: true }
 	);  
 
