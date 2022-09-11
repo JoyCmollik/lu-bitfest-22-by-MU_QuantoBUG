@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 
 const useAuthentication = () => {
-	const [user, setUser] = useState(null);
+	const [user, setUser] = useState({});
 	const [isAdmin, setIsAdmin] = useState(false);
 
 	const handleConsumerRegister = async (user, navigate) => {
@@ -11,7 +11,7 @@ const useAuthentication = () => {
        try {
          const response = await axios.post('auth/register', user)
          setUser(response.data.user);
-        console.log(response);
+        console.log(response.data.user);
         navigate('/dashboard');
        } catch (error) {
             console.log(error)
@@ -24,7 +24,7 @@ const useAuthentication = () => {
        try {
          const response = await axios.post('auth/login', user)
          setUser(response.data.user);
-        console.log(response);
+        console.log(response.data.user);
          navigate('/dashboard');
        } catch (error) {
             console.log(error.response.data);
@@ -37,7 +37,7 @@ const useAuthentication = () => {
         try {
          const response = await axios.post('auth/admin-login', data);
          setUser(response.data.user);
-        console.log(response);
+        console.log(response.data.user);
          navigate('/dashboard');
        } catch (error) {
             console.log(error.response.data);
@@ -56,6 +56,7 @@ const useAuthentication = () => {
     };
 
 	return {
+          user,
 		handleConsumerRegister,
 		handleConsumerLogin,
 		handleLoginAdmin,

@@ -2,7 +2,8 @@ import React from 'react';
 import { AiOutlineUser, AiOutlineHome } from 'react-icons/ai';
 import { GrUserSettings } from 'react-icons/gr';
 import { IoBusOutline } from 'react-icons/io5';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import useAuth from '../../../hooks/useAuth';
 
 const studentLinks = [
 	{
@@ -56,11 +57,17 @@ const adminLinks = [
 ];
 
 const DashboardSidebar = () => {
+	const { user, handleLogout } = useAuth();
+	const { navigate } = useNavigate();
+
+	console.log(user);
 	return (
 		<div className='min-h-screen bg-white shadow rounded-lg flex flex-col items-center p-[25px] space-y-20'>
 			{/* logo */}
 			<div className=''>
-				<h4 className='text-2xl font-bold'>Bus Stat</h4>
+				<h4 className='text-2xl font-bold'>
+					Bus <span className='text-primary'>Stats</span>
+				</h4>
 			</div>
 
 			{/* user information */}
@@ -70,47 +77,49 @@ const DashboardSidebar = () => {
 					<AiOutlineUser size={40} />
 				</div>
 				<p className='text-gray-500'>Welcome Back</p>
-				<h5 className='text-xl font-bold'>Taylor Silora</h5>
-				<small>student</small>
+				<h5 className='text-xl font-bold'>{user?.name}</h5>
+				<small>{user?.role}</small>
 			</div>
 
 			{/* links */}
 			<div className='flex flex-col place-items-center gap-4'>
-				{studentLinks.map(({ to, text, icon }, linkIdx) => (
-					<NavLink
-						to={to}
-						key={linkIdx}
-						className={({ isActive }) =>
-							`px-4 py-2 text-xl flex justify-start items-center box-shadow border rounded-lg space-x-3 w-full ${
-								isActive
-									? ' text-dark border-secondary'
-									: 'text-black'
-							}`
-						}
-					>
-						{icon}
-						<h5 className='font-medium text-lg'>{text}</h5>
-					</NavLink>
-				))}
+				{user?.role === 'student' &&
+					studentLinks.map(({ to, text, icon }, linkIdx) => (
+						<NavLink
+							to={to}
+							key={linkIdx}
+							className={({ isActive }) =>
+								`px-4 py-2 text-xl flex justify-start items-center box-shadow border rounded-lg space-x-3 w-full ${
+									isActive
+										? ' text-dark border-secondary'
+										: 'text-black'
+								}`
+							}
+						>
+							{icon}
+							<h5 className='font-medium text-lg'>{text}</h5>
+						</NavLink>
+					))}
 
-				<h4>admin links</h4>
-				{adminLinks.map(({ to, text, icon }, linkIdx) => (
-					<NavLink
-						to={to}
-						key={linkIdx}
-						className={({ isActive }) =>
-							`px-4 py-2 text-xl flex justify-start items-center box-shadow border rounded-lg space-x-3 w-full ${
-								isActive
-									? ' text-dark border-secondary'
-									: 'text-black'
-							}`
-						}
-					>
-						{icon}
-						<h5 className='font-medium text-lg'>{text}</h5>
-					</NavLink>
-				))}
+				{user?.role === 'admin' &&
+					adminLinks.map(({ to, text, icon }, linkIdx) => (
+						<NavLink
+							to={to}
+							key={linkIdx}
+							className={({ isActive }) =>
+								`px-4 py-2 text-xl flex justify-start items-center box-shadow border rounded-lg space-x-3 w-full ${
+									isActive
+										? ' text-dark border-secondary'
+										: 'text-black'
+								}`
+							}
+						>
+							{icon}
+							<h5 className='font-medium text-lg'>{text}</h5>
+						</NavLink>
+					))}
 			</div>
+			<button onClick={() => handleLogout(navigate)}>handleLogout</button>
 		</div>
 	);
 };

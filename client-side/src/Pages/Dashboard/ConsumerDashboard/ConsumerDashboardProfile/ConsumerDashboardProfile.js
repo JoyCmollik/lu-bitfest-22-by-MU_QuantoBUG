@@ -1,14 +1,11 @@
 import React from 'react';
+import useAuth from '../../../../hooks/useAuth';
 import StudentProfile from '../StudentProfile/StudentProfile';
 import TeacherProfile from '../TeacherProfile/TeacherProfile';
 
 const ConsumerDashboardProfile = () => {
-	return (
-		<div>
-			<StudentProfile />
-			<TeacherProfile />
-		</div>
-	);
+	const { user } = useAuth();
+	return <div>{user.role === 'student' ? <StudentProfile /> : <TeacherProfile /> }</div>;
 };
 
 export default ConsumerDashboardProfile;

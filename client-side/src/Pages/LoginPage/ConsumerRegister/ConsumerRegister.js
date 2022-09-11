@@ -41,7 +41,7 @@ const ConsumerRegister = () => {
 		if (newRole === 'student') {
 			setFinInputList((prevList) => [
 				...initialInputs,
-				{ inputType: 'Student ID' },
+				{ inputType: 'Student ID', property: 'studentId' },
 			]);
 		} else {
 			setFinInputList((prevList) => [...initialInputs]);
