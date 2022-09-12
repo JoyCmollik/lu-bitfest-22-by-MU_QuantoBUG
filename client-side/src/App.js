@@ -1,5 +1,7 @@
+import { useReducer } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import useAuth from './hooks/useAuth';
 import AdminBusInventory from './Pages/Dashboard/AdminDashboard/AdminBusInventory/AdminBusInventory';
 import AdminBusInventoryAdd from './Pages/Dashboard/AdminDashboard/AdminBusInventoryAdd/AdminBusInventoryAdd';
 import AdminBusInventoryUpdate from './Pages/Dashboard/AdminDashboard/AdminBusInventoryUpdate/AdminBusInventoryUpdate';
@@ -9,6 +11,10 @@ import AdminBusRouteUpdate from './Pages/Dashboard/AdminDashboard/AdminBusRouteU
 import AdminBusStoppage from './Pages/Dashboard/AdminDashboard/AdminBusStoppage/AdminBusStoppage';
 import AdminBusStoppageAdd from './Pages/Dashboard/AdminDashboard/AdminBusStoppageAdd/AdminBusStoppageAdd';
 import AdminBusStoppageUpdate from './Pages/Dashboard/AdminDashboard/AdminBusStoppageUpdate/AdminBusStoppageUpdate';
+import AdminDashboardHome from './Pages/Dashboard/AdminDashboard/AdminDashboardHome/AdminDashboardHome';
+import TimeSlotAdd from './Pages/Dashboard/AdminDashboard/AdminDashboardTimeSlot/TimeSlotAdd/TimeSlotAdd';
+import TimeSlotList from './Pages/Dashboard/AdminDashboard/AdminDashboardTimeSlot/TimeSlotList/TimeSlotList';
+import TimeSlotUpdate from './Pages/Dashboard/AdminDashboard/AdminDashboardTimeSlot/TimeSlotUpdate/TimeSlotUpdate';
 
 import ConsumerDashboardHome from './Pages/Dashboard/ConsumerDashboard/ConsumerDashboardHome/ConsumerDashboardHome';
 import ConsumerDashboardProfile from './Pages/Dashboard/ConsumerDashboard/ConsumerDashboardProfile/ConsumerDashboardProfile';
@@ -20,10 +26,12 @@ import AdminRegister from './Pages/LoginPage/AdminRegister/AdminRegister';
 import ConsumerBusDetails from './Pages/LoginPage/ConsumerBusDetails/ConsumerBusDetails';
 import ConsumerLogin from './Pages/LoginPage/ConsumerLogin/ConsumerLogin';
 import ConsumerRegister from './Pages/LoginPage/ConsumerRegister/ConsumerRegister';
+import ConsumerRoute  from './sharedComponents/ConsumerRoute/ConsumerRoute';
 
 import NotFound from './Pages/NotFoundPage/NotFound/NotFound';
 
 function App() {
+	const { user } = useAuth();
 	return (
 		<div className='App'>
 			<Routes>
@@ -38,7 +46,18 @@ function App() {
 					element={<ConsumerBusDetails />}
 				/>
 				<Route path='dashboard/*' element={<DashboardHome />}>
-					<Route index element={<ConsumerDashboardHome />} />
+					{user?.role === 'admin' ? (
+						<Route index element={<AdminDashboardHome />} />
+					) : (
+						<Route
+							index
+							element={
+								<ConsumerRoute>
+									<ConsumerDashboardHome />
+								</ConsumerRoute>
+							}
+						/>
+					)}
 					<Route
 						path='profile'
 						element={<ConsumerDashboardProfile />}
@@ -56,6 +75,12 @@ function App() {
 					<Route
 						path='routeUpdate/:routeId'
 						element={<AdminBusRouteUpdate />}
+					/>
+					<Route path='timeSlots' element={<TimeSlotList />} />
+					<Route path='addTimeSlots' element={<TimeSlotAdd />} />
+					<Route
+						path='timeSlotUpdate/:timeId'
+						element={<TimeSlotUpdate />}
 					/>
 					<Route path='stoppages' element={<AdminBusStoppage />} />
 					<Route

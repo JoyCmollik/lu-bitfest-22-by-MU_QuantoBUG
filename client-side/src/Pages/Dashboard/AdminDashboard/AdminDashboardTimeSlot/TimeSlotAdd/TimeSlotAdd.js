@@ -1,62 +1,40 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const AdminBusStoppageUpdate = () => {
-	const { stoppageId: id } = useParams();
+const inputs = [
+	{
+		inputType: 'text',
+		inputTitle: 'Time',
+		inputData: 'timeSlot',
+	},
+	{
+		inputType: 'text',
+		inputTitle: 'Bus No',
+		inputData: 'busNo',
+	},
+	{
+		inputType: 'text',
+		inputTitle: 'Route No',
+		inputData: 'routeNo',
+	},
+];
+
+const TimeSlotAdd = () => {
 	const { register, handleSubmit, reset } = useForm();
 	const navigate = useNavigate();
-	const [ stoppage, setStoppage ] = useState();
 
-	useEffect(() => {
-		axios
-			.get(`/stoppage/get/${id}`)
-			.then((res) => {
-				setStoppage(res.data.stoppage);
-				console.log(res.data);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}, []);
+	const onSubmit = async (data) => {
+		const { _id, routeNo, busNo, timeSlot } = data;
+		console.log(data);
 
-
-	const inputs = [
-		{
-			inputType: 'number',
-			inputTitle: 'Route Number',
-			inputData: 'routeNo',
-			value: stoppage?.routeNo,
-		},
-		{
-			inputType: 'text',
-			inputTitle: 'label',
-			inputData: 'label',
-			value: stoppage?.label,
-		},
-		{
-			inputType: 'text',
-			inputTitle: 'Latitude',
-			inputData: 'latitude',
-			value: stoppage?.latitude,
-		},
-		{
-			inputType: 'text',
-			inputTitle: 'Longitude',
-			inputData: 'longitude',
-			value: stoppage?.longitude,
-		},
-	];
-
-	const onSubmit =  async (data) => {
 		try {
-			const res = await axios.post('/stoppage/update/:id', data);
-			navigate('/dashboard/stoppages');
+			const res = await axios.post('/timeSlots', data);
+			navigate('/dashboard/timeSlots');
 		} catch (error) {
-			console.log(error)
+			console.log(error);
 		}
-
 
 		reset();
 	};
@@ -69,22 +47,22 @@ const AdminBusStoppageUpdate = () => {
 					<div className='flex justify-between '>
 						<div>
 							<h2 className='text-2xl font-semibold'>
-								Bus Stoppage
+								Time Slots
 							</h2>
+							<p className='text-sm text-gray-600'>
+								adding new time slots
+							</p>
 						</div>
 						<div className='py-2 '>
 							<input
 								type='submit'
-								value={'Update'}
+								value={'Add'}
 								className=' border py-3 px-4 rounded-lg focus:outline-none focus:ring-1 focus:border-purple-600 text-white bg-dark'
 							/>
 						</div>
 					</div>
 					{inputs.map(
-						(
-							{ inputType, inputTitle, inputData, value },
-							index
-						) => (
+						({ inputType, inputTitle, inputData }, index) => (
 							<div
 								key={index}
 								className='grid grid-cols-12 justify-between py-2 '
@@ -97,7 +75,6 @@ const AdminBusStoppageUpdate = () => {
 										className='w-full bg-light border  py-3 pl-3 rounded-lg focus:outline-none focus:ring-1 focus:border-blue-500 border-secondary'
 										type={inputType}
 										name={inputTitle}
-										defaultValue={value}
 										placeholder={inputTitle}
 										{...register(`${inputData}`, {
 											required: true,
@@ -113,4 +90,4 @@ const AdminBusStoppageUpdate = () => {
 	);
 };
 
-export default AdminBusStoppageUpdate;
+export default TimeSlotAdd;

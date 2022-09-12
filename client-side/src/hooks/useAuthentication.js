@@ -44,11 +44,10 @@ const useAuthentication = () => {
        }
     };
 
-	const handleLogout = async ( navigate ) => {
+	const handleLogout = async ( ) => {
         try {
-         const response = await axios.get('auth/logout');
+         const response = await axios.get('/auth/logout');
          setUser(() => null);
-         navigate('/');
         console.log(response);
        } catch (error) {
             console.log(error.response.data);

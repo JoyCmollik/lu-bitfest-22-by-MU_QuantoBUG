@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React from 'react';
-import { AiOutlineUser, AiOutlineHome, AiOutlineLogout } from 'react-icons/ai';
+import { AiOutlineUser, AiOutlineHome, AiOutlineLogout, AiFillClockCircle, AiFillStop, AiFillSetting, AiOutlineDashboard } from 'react-icons/ai';
+import { FaBus, FaRoad } from 'react-icons/fa';
 import { GrUserSettings } from 'react-icons/gr';
 import { IoBusOutline } from 'react-icons/io5';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -33,33 +34,43 @@ const adminLinks = [
 	{
 		to: '/dashboard/inventory',
 		text: 'Bus Inventory',
-		icon: <AiOutlineHome />,
+		icon: <FaBus />,
 	},
 	{
 		to: '/dashboard/routes',
 		text: 'Routes',
-		icon: <AiOutlineHome />,
+		icon: <FaRoad />,
 	},
 	{
 		to: '/dashboard/stoppages',
 		text: 'Stoppages',
-		icon: <AiOutlineHome />,
+		icon: <AiFillStop />,
+	},
+	{
+		to: '/dashboard/timeSlots',
+		text: 'Time Slots',
+		icon: <AiFillClockCircle />,
 	},
 	{
 		to: '/allocate-route',
 		text: 'Allocate route',
-		icon: <AiOutlineHome />,
+		icon: <AiFillSetting />,
 	},
 	{
 		to: '/more',
 		text: 'Suggestions',
-		icon: <AiOutlineHome />,
+		icon: <AiOutlineDashboard />,
 	},
 ];
 
 const DashboardSidebar = () => {
 	const { user, handleLogout } = useAuth();
 	const { navigate } = useNavigate();
+
+	const handleAllLogout = () => {
+		handleLogout();
+		navigate('/');
+	}
 
 	console.log(user);
 	return (
@@ -120,7 +131,7 @@ const DashboardSidebar = () => {
 						</NavLink>
 					))}
 			</div>
-			<button onClick={() => handleLogout(navigate)}>
+			<button onClick={handleAllLogout}>
 				<AiOutlineLogout size={20} />
 			</button>
 		</div>

@@ -27,7 +27,7 @@ const AdminBusInventoryUpdate = () => {
 			const { licenseNo, codeName, capacity, name, contacts } = data;
 
 		try {
-			const res = await axios.post('/bus/update/:id', {licenseNo, codeName, capacity, driverInfo: {name, contacts},  isActive: isActiveRef.current.checked});
+			const res = await axios.put(`/bus/update/${id}`, {licenseNo, codeName, capacity, driverInfo: {name, contacts},  isActive: isActiveRef.current.checked});
 			navigate('/dashboard/inventory');
 		} catch (error) {
 			console.log(error)

@@ -4,7 +4,7 @@ const CustomError = require('../errors');
 const { createTokenUser, attachCookiesToResponse } = require('../utils');
 
 const getAllUsers = async (req, res) => {
-	const users = await User.find({ role: 'user' }).select('-password');
+	const users = await User.find().select('-password');
 	res.status(StatusCodes.OK).json({ users });
 };
 
@@ -33,10 +33,10 @@ const updateUser = async (req, res) => {
 		{ _id: req.user.userId },
 		req.body,
 		{ new: true, runValidators: true }
-	);  
+	);
 
-    const tokenUser = createTokenUser(user);
-    attachCookiesToResponse({res, user: tokenUser});
+	const tokenUser = createTokenUser(user);
+	attachCookiesToResponse({ res, user: tokenUser });
 
 	res.status(StatusCodes.OK).json({ user: tokenUser });
 };
