@@ -64,31 +64,26 @@ const getNumbersOfUsers = async (req, res) => {
 		numberOfStaffsFiltered,
 	};
 
-	if (numberOfStudentsFiltered >= numberOfStudents) {
-		console.log(numberOfStudents);
-	} else {
-		console.log(numberOfStudents - numberOfStudentsFiltered);
-	}
+	// if (numberOfStudentsFiltered >= numberOfStudents) {
+	// 	console.log(numberOfStudents);
+	// } else {
+	// 	console.log(numberOfStudents - numberOfStudentsFiltered);
+	// }
 
-	if (numberOfTeachersFiltered >= numberOfTeachers) {
-		numberOfStudents = numberOfStudents;
-	} else {
-		numberOfTeachers -= numberOfTeachersFiltered;
-	}
+	// if (numberOfTeachersFiltered >= numberOfTeachers) {
+	// 	// numberOfStudents = numberOfStudents;
+	// } else {
+	// 	numberOfTeachers -= numberOfTeachersFiltered;
+	// }
 
-	if (numberOfStaffsFiltered >= numberOfStaffs) {
-		numberOfStudents = numberOfStudents;
-	} else {
-		numberOfStaffs -= numberOfStaffsFiltered;
-	}
+	// if (numberOfStaffsFiltered >= numberOfStaffs) {
+	// 	numberOfStudents = numberOfStudents;
+	// } else {
+	// 	numberOfStaffs -= numberOfStaffsFiltered;
+	// }
 	// else if (Math.abs(numberOfStudentsFiltered - numberOfStudents))
 	res.status(StatusCodes.OK).json({
-		numberOfStudents,
-		numberOfTeachers,
-		numberOfStudentsFiltered,
-		numberOfTeachersFiltered,
-		numberOfStaffs,
-		numberOfStaffsFiltered,
+		...usersCount,
 	});
 };
 
