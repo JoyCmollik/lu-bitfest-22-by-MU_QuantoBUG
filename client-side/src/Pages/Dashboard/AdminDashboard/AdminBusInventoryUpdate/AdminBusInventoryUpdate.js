@@ -1,25 +1,37 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
-
-const matchedBus = {
-	id: 1,
-	License: '89890890',
-	codeName: '101',
-	DriverName: 'kashem',
-	DriverContact: '9980980945',
-	isActive: 'true',
-	capcity: '90',
-};
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
 const AdminBusInventoryUpdate = () => {
-	const { busId } = useParams();
-	//console.log(busId);
+	const [bus, setBus] = useState();
+	const { busId : id } = useParams();
+	const navigate = useNavigate();
+	const isActiveRef = useRef(false);
 
-	//const { License, capcity, codeName, DriverName, DriverContact } = matchedId;
+	useEffect(() => {
+		axios
+			.get(`/bus/get/${id}`)
+			.then((res) => {
+				setBus(res.data.bus);
+				console.log(res.data.bus);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, []);
+
 	const { register, handleSubmit, reset } = useForm();
-	const onSubmit = (data) => {
-		/* 	console.log(data); */
+	const onSubmit = async (data) => {
+		console.log(data);
+			const { licenseNo, codeName, capacity, name, contacts } = data;
+
+		try {
+			const res = await axios.post('/bus/update/:id', {licenseNo, codeName, capacity, driverInfo: {name, contacts},  isActive: isActiveRef.current.checked});
+			navigate('/dashboard/inventory');
+		} catch (error) {
+			console.log(error)
+		}
 
 		reset();
 	};
@@ -29,48 +41,47 @@ const AdminBusInventoryUpdate = () => {
 			id: 1,
 			inputType: 'number',
 			inputTitle: 'License Number',
-			inputData: 'license',
-			value: matchedBus.License,
+			inputData: 'licenseNo',
+			value: bus?.licenseNo,
 		},
 		{
 			id: 2,
 			inputType: 'number',
 			inputTitle: 'Codename',
-			inputData: 'codename',
-			value: matchedBus.codeName,
+			inputData: 'codeName',
+			value: bus?.codeName,
 		},
 		{
 			id: 3,
 			inputType: 'text',
 			inputTitle: 'Capacity',
 			inputData: 'capacity',
-			value: matchedBus.capcity,
+			value: bus?.capacity,
 		},
 
 		{
 			id: 4,
 			inputType: 'text',
 			inputTitle: 'Driver Name',
-			inputData: 'driverName',
-			value: matchedBus.DriverName,
+			inputData: 'name',
+			value: bus?.driverInfo.name,
 		},
 		{
 			id: 5,
 			inputType: 'text',
 			inputTitle: 'Driver Contact Number',
-			inputData: 'DriverContact',
-			value: matchedBus.DriverContact,
+			inputData: 'contacts',
+			value: bus?.driverInfo.contacts,
 		},
 	];
 	return (
 		<div>
-			<h2>inventory update:{busId}</h2>
 			<div className='flex flex-col justify-center'>
 				<form onSubmit={handleSubmit(onSubmit)}>
 					<div className='flex justify-between '>
 						<div>
 							<h2 className='text-2xl font-semibold'>
-								Update Bus {busId}
+								Update Bus
 							</h2>
 							<p className='text-sm text-gray-600'>
 								adding new bus to inventory
@@ -105,7 +116,6 @@ const AdminBusInventoryUpdate = () => {
 										defaultValue={value}
 										placeholder={inputTitle}
 										{...register(`${inputData}`, {
-											required: true,
 										})}
 									/>
 								</div>
@@ -114,7 +124,7 @@ const AdminBusInventoryUpdate = () => {
 					)}
 					<div>
 						<input
-							defaultValue={matchedBus.isActive}
+							defaultValue={bus?.isActive}
 							type='checkbox'
 							className='p-5 inline-block'
 						/>

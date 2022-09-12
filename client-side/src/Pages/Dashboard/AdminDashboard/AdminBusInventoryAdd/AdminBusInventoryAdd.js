@@ -1,16 +1,18 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 const inputs = [
 	{
 		inputType: 'number',
 		inputTitle: 'License Number',
-		inputData: 'license',
+		inputData: 'licenseNo',
 	},
 	{
-		inputType: 'number',
+		inputType: 'text',
 		inputTitle: 'Codename',
-		inputData: 'codename',
+		inputData: 'codeName',
 	},
 	{
 		inputType: 'text',
@@ -21,20 +23,29 @@ const inputs = [
 	{
 		inputType: 'text',
 		inputTitle: 'Driver Name',
-		inputData: 'driverName',
+		inputData: 'name',
 	},
 	{
 		inputType: 'text',
 		inputTitle: 'Driver Contact Number',
-		inputData: 'DriverContact',
+		inputData: 'contacts',
 	},
 ];
 
 const AdminBusInventoryAdd = () => {
 	const { register, handleSubmit, reset } = useForm();
+	const isActiveRef = useRef(false);
+	const navigate = useNavigate();
 
-	const onSubmit = (data) => {
-		/* 	console.log(data); */
+	const onSubmit = async (data) => {
+		const {licenseNo, codeName, capacity, name, contacts} = data;
+
+		try {
+			const res = await axios.post('/bus/create', {licenseNo, codeName, capacity, driverInfo: {name, contacts},  isActive: isActiveRef.current.checked});
+			navigate('/dashboard/inventory');
+		} catch (error) {
+			console.log(error)
+		}
 
 		reset();
 	};
@@ -85,7 +96,11 @@ const AdminBusInventoryAdd = () => {
 						)
 					)}
 					<div>
-						<input type='checkbox' className='p-5 inline-block' />
+						<input
+							type='checkbox'
+							ref={isActiveRef}
+							className='p-5 inline-block'
+						/>
 						<p className='inline-block ml-3 text-base'>
 							Bus is Active
 						</p>

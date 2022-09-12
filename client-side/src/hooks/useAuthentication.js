@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const useAuthentication = () => {
@@ -12,7 +12,7 @@ const useAuthentication = () => {
          const response = await axios.post('auth/register', user)
          setUser(response.data.user);
         console.log(response.data.user);
-        navigate('/dashboard');
+        navigate('/consumerBusInfo');
        } catch (error) {
             console.log(error)
        }
@@ -44,16 +44,24 @@ const useAuthentication = () => {
        }
     };
 
-	const handleLogout = async (navigate) => {
+	const handleLogout = async ( navigate ) => {
         try {
-         const response = await axios.get('auth/logout')
-         setUser(null);
-        console.log(response);
+         const response = await axios.get('auth/logout');
+         setUser(() => null);
          navigate('/');
+        console.log(response);
        } catch (error) {
             console.log(error.response.data);
        }
     };
+
+    useEffect(() => {
+     axios.get('/users/showMe').then(res => {
+          setUser(res.data.user);
+     }).catch(err => {
+          setUser(null);
+     }) 
+    }, []);
 
 	return {
           user,

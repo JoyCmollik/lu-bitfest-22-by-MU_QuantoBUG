@@ -8,6 +8,17 @@ const getAllRoutes = async (req, res) => {
 	res.status(StatusCodes.OK).json({ routes, count: routes.length });
 };
 
+const getSingleRoute = async (req, res) => {
+	const { id } = req.params;
+
+	const route = await RouteStart.findById(id);
+	if (!route) {
+		throw new NotFoundError(`No bus with id ${id}`);
+	}
+
+	res.status(StatusCodes.OK).json({ route });
+};
+
 const getFiltered = async (req, res) => {
 	const {
 		// user: { userId },
@@ -91,6 +102,7 @@ module.exports = {
 	createRoute,
 	updateRoute,
 	getAllRoutes,
+	getSingleRoute,
 	getFiltered,
 	deleteRoute,
 };

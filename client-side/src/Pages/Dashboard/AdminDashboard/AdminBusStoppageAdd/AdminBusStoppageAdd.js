@@ -1,5 +1,7 @@
+import axios from 'axios';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 const inputs = [
 	{
@@ -14,19 +16,35 @@ const inputs = [
 	},
 	{
 		inputType: 'text',
-		inputTitle: 'Latitude & Longitude',
-		inputData: 'Latitude&Longitude',
+		inputTitle: 'Latitude',
+		inputData: 'latitude',
+	},
+	{
+		inputType: 'text',
+		inputTitle: 'Longitude',
+		inputData: 'longitude',
 	},
 ];
 
 const AdminBusStoppageAdd = () => {
 	const { register, handleSubmit, reset } = useForm();
+	const navigate = useNavigate();
 
-	const onSubmit = (data) => {
+	const onSubmit = async (data) => {
+		const {routeNo,  label, latitude, longitude} = data;
 		console.log(data);
+
+		try {
+			const res = await axios.post('/stoppages/', 
+			{ routeNo, label, latitude, longitude });
+			navigate('/dashboard/stoppages');
+		} catch (error) {
+			console.log(error)
+		}
 
 		reset();
 	};
+
 	return (
 		<section className='justify-center mt-20'>
 			{/* input forms */}

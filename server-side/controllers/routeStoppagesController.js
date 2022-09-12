@@ -3,9 +3,20 @@ const { StatusCodes } = require('http-status-codes');
 const { BadRequestError, NotFoundError } = require('../errors');
 
 const getAllRouteStoppages = async (req, res) => {
-	const routes = await RouteStoppages.find();
+	const stoppages = await RouteStoppages.find();
 
-	res.status(StatusCodes.OK).json({ routes, count: routes.length });
+	res.status(StatusCodes.OK).json({ stoppages, count: stoppages.length });
+};
+
+const getSingleStoppage = async (req, res) => {
+	const { id } = req.params;
+
+	const stoppage = await RouteStoppages.findById(id);
+	if (!stoppage) {
+		throw new NotFoundError(`No stoppage with id ${id}`);
+	}
+
+	res.status(StatusCodes.OK).json({ stoppage });
 };
 
 const getFilteredStoppages = async (req, res) => {
@@ -87,6 +98,7 @@ module.exports = {
 	createRouteStoppages,
 	updateRouteStoppages,
 	getAllRouteStoppages,
+	getSingleStoppage,
 	getFilteredStoppages,
 	deleteRouteStoppages,
 };

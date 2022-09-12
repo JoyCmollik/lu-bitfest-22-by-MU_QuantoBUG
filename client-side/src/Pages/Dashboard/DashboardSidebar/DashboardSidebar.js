@@ -1,11 +1,12 @@
+import axios from 'axios';
 import React from 'react';
-import { AiOutlineUser, AiOutlineHome } from 'react-icons/ai';
+import { AiOutlineUser, AiOutlineHome, AiOutlineLogout } from 'react-icons/ai';
 import { GrUserSettings } from 'react-icons/gr';
 import { IoBusOutline } from 'react-icons/io5';
 import { NavLink, useNavigate } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 
-const studentLinks = [
+const consumerLinks = [
 	{
 		to: '/dashboard',
 		text: 'Dashboard',
@@ -83,8 +84,8 @@ const DashboardSidebar = () => {
 
 			{/* links */}
 			<div className='flex flex-col place-items-center gap-4'>
-				{user?.role === 'student' &&
-					studentLinks.map(({ to, text, icon }, linkIdx) => (
+				{user?.role !== 'admin' &&
+					consumerLinks.map(({ to, text, icon }, linkIdx) => (
 						<NavLink
 							to={to}
 							key={linkIdx}
@@ -119,7 +120,9 @@ const DashboardSidebar = () => {
 						</NavLink>
 					))}
 			</div>
-			<button onClick={() => handleLogout(navigate)}>handleLogout</button>
+			<button onClick={() => handleLogout(navigate)}>
+				<AiOutlineLogout size={20} />
+			</button>
 		</div>
 	);
 };

@@ -1,5 +1,7 @@
+import axios from 'axios';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 const inputs = [
 	{
@@ -14,24 +16,43 @@ const inputs = [
 	},
 	{
 		inputType: 'text',
-		inputTitle: 'Latitude & Longitude',
-		inputData: 'Latitude&Longitude',
+		inputTitle: 'Latitude',
+		inputData: 'latitude',
 	},
 	{
-		inputType: 'time',
+		inputType: 'text',
+		inputTitle: 'Longitude',
+		inputData: 'longitude',
+	},
+	{
+		inputType: 'text',
 		inputTitle: 'Start Time',
-		inputData: 'start time',
+		inputData: 'startTime',
 	},
 ];
 
 const AdminBusRouteAdd = () => {
 	const { register, handleSubmit, reset } = useForm();
+	const navigate = useNavigate();
 
-	const onSubmit = (data) => {
+	const onSubmit = async (data) => {
+		const {licenseNo, startTime, label, latitude, longitude} = data;
 		console.log(data);
+
+		try {
+			const res = await axios.post('/routeStart/create', {
+				licenseNo,
+				startTime,
+				startLocation: { label, latitude, longitude },
+			});
+			navigate('/dashboard/routes');
+		} catch (error) {
+			console.log(error)
+		}
 
 		reset();
 	};
+
 	return (
 		<section className='justify-center mt-20'>
 			{/* input forms */}

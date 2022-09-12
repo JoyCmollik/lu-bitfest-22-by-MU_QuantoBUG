@@ -1,50 +1,21 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { FaBus } from 'react-icons/fa';
 import { MdOutlineLibraryAdd } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 
-const busList = [
-	{
-		id: 1,
-		License: '89890890',
-		codeName: '101',
-		DriverName: 'kashem',
-		DriverContact: '9980980945',
-		isActive: 'true',
-		capcity: '90',
-	},
-	{
-		id: 2,
-		License: '89890890',
-
-		codeName: '102',
-		DriverName: 'kashem',
-		DriverContact: '9980980945',
-		isActive: 'false',
-		capcity: '40',
-	},
-	{
-		id: 3,
-		License: '89890890',
-		codeName: '103',
-		DriverName: 'kashem',
-		DriverContact: '9980980945',
-		isActive: 'true',
-		capcity: '30',
-	},
-	{
-		id: 4,
-		License: '89890890',
-		codeName: '104',
-		DriverName: 'kashem',
-		DriverContact: '9980980945',
-		isActive: 'true',
-		capcity: '90',
-	},
-];
-
 const AdminBusInventory = () => {
+	const [busList, setBusList] = useState([]);
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		axios.get('/bus/get').then(res => {
+			setBusList(res.data.bus);
+			console.log(res)
+		}).catch(err => {
+			console.log(err);
+		})
+	}, []);
 
 	return (
 		<section>
@@ -68,35 +39,33 @@ const AdminBusInventory = () => {
 				</div>
 				{/* Existing Bus Update list */}
 				<div>
-					{busList.map(
+					{busList && busList.map(
 						({
-							id,
+							_id,
 							codeName,
-							License,
+							licenseNo,
 							isActive,
-							capcity,
-							DriverName,
-							DriverContact,
+							capacity,
+							driverInfo
 						}) => (
 							<div
-								key={id}
+								key={_id}
 								className='border-2 border-gray-200 hover:border-dark space-y-2 mb-2 rounded items-center py-2 px-3 flex justify-between'
 							>
 								<p>CodeName : {codeName}</p>
-								<p>License: {License}</p>
-								<p>Capacity: {capcity}</p>
-								<p>License: {DriverName}</p>
-								<p>Capacity: {DriverContact}</p>
+								<p>License: {licenseNo}</p>
+								<p>Capacity: {capacity}</p>
+								<p>Driver: {driverInfo.contacts}</p>
 								{/* should be dynamic */}
 
 								<p className='font-medium'>
-									Active : {isActive}
+									{isActive ? 'active' : 'inactive'}
 								</p>
 								<div>
 									<button
 										onClick={() =>
 											navigate(
-												`/dashboard/busUpdate/${id}`
+												`/dashboard/busUpdate/${_id}`
 											)
 										}
 										className='block border bg-secondary py-2 px-3 rounded-lg hover:bg-dark hover:text-white'

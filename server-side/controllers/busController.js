@@ -27,6 +27,17 @@ const getAllBuses = async (req, res) => {
 // 	res.status(StatusCodes.OK).json({ bus });
 // };
 
+const getSingleBus = async (req, res) => {
+	const { id } = req.params;
+
+	const bus = await Bus.findById(id);
+	if (!bus) {
+		throw new NotFoundError(`No bus with id ${id}`);
+	}
+
+	res.status(StatusCodes.OK).json({ bus });
+};
+
 const updateBusInfo = async (req, res) => {
 	const {
 		params: { id: busId },
@@ -85,6 +96,7 @@ const deleteBus = async (req, res) => {
 
 module.exports = {
 	createBusInfo,
+	getSingleBus,
 	updateBusInfo,
 	getAllBuses,
 	// getFiltered,

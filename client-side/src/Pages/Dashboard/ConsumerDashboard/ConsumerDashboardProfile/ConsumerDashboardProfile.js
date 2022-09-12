@@ -5,7 +5,8 @@ import TeacherProfile from '../TeacherProfile/TeacherProfile';
 
 const ConsumerDashboardProfile = () => {
 	const { user } = useAuth();
-	return <div>{user.role === 'student' ? <StudentProfile /> : <TeacherProfile /> }</div>;
+	return <div>{user.role === 'student' && <StudentProfile /> }
+	{user?.role === 'teacher' && <TeacherProfile />}</div>;
 };
 
 export default ConsumerDashboardProfile;
